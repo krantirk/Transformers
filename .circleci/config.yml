@@ -14,12 +14,22 @@ jobs:
             - run: pip install torch -f https://download.pytorch.org/whl/torch_stable.html
             - run: pip install .[sklearn,testing]
             - run: python -m pytest -n 8 --dist=loadfile -s -v ./tests/
+    deploy_doc:
+        working_directory: ~/transformers
+        docker:
+            - image: circleci/python:3.5
+        steps:
+            - add_ssh_keys:
+                fingerprints:
+                    - "5b:7a:95:18:07:8c:aa:76:4c:60:35:88:ad:60:56:71"
+            - run: ssh $doc "ls -al /home/corenlp"
 
 workflows:
     version: 2
     build_and_test:
         jobs:
             - run_tests_torch_win
+            - deploy_doc
 
 #     run_tests_torch_and_tf:
 #         working_directory: ~/transformers

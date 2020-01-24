@@ -15,6 +15,7 @@
 
 
 import os
+import sys
 import time
 import unittest
 
@@ -82,7 +83,10 @@ class HfApiEndpointsTest(HfApiCommonTest):
             with open(FILE_PATH, "r") as f:
                 body = f.read()
             r = requests.get(access_url)
-            self.assertEqual(r.text, body)
+            if sys.platform == "win32":
+                self.assertEqual(r.text.splitlines(), body.splitlines())
+            else:
+                self.assertEqual(r.text, body)
 
     def test_list_objs(self):
         objs = self._api.list_objs(token=self._token)
