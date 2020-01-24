@@ -9,6 +9,13 @@ jobs:
         steps:
             - checkout
             - run: Write-Host "Hello"
+
+workflows:
+    version: 2
+    build_and_test:
+        jobs:
+            - run_tests_torch_win
+
 #     run_tests_torch_and_tf:
 #         working_directory: ~/transformers
 #         docker:
