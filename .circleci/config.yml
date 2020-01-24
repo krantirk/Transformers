@@ -5,7 +5,7 @@ orbs:
 
 jobs:
     run_tests_torch_win:
-        executor: win/default
+        executor: win/gpu-nvidia
         steps:
             - checkout
             - run: Write-Host "Hello"
