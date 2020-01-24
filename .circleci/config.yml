@@ -5,10 +5,13 @@ orbs:
 
 jobs:
     run_tests_torch_win:
-        executor: win/gpu-nvidia
+        executor: win/default
         steps:
             - checkout
-            - run: Write-Host "Hello"
+            - run: python --version
+            - run: pip install torch -f https://download.pytorch.org/whl/torch_stable.html
+            - run: pip install .[sklearn,testing]
+            - run: python -m pytest -n 8 --dist=loadfile -s -v ./tests/
 
 workflows:
     version: 2
